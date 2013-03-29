@@ -30,8 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,7 +43,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseEntityRepository.cs" />
+    <Compile Include="DbOperationStatus.cs" />
+    <Compile Include="IBaseEntityRepository.cs" />
+    <Compile Include="Investments\BrokerageAccountRepository.cs" />
+    <Compile Include="Investments\IBrokerageAccountRepository.cs" />
+    <Compile Include="Investments\IMutualFundRepository.cs" />
+    <Compile Include="Investments\IPurchaseTransactionRepository.cs" />
+    <Compile Include="Investments\ISellTransactionRepository.cs" />
+    <Compile Include="Investments\IStockRepository.cs" />
+    <Compile Include="Investments\MutualFundRepository.cs" />
+    <Compile Include="Investments\PurchaseTransactionRepository.cs" />
+    <Compile Include="Investments\SellTransactionRepository.cs" />
+    <Compile Include="Investments\StockRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WealthHealth.Models\WealthHealth.Models.csproj">
+      <Project>{51c50d79-a70c-4208-94f5-dc962c9616c4}</Project>
+      <Name>WealthHealth.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

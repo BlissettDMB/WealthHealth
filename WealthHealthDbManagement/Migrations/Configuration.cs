@@ -1,11 +1,10 @@
+using WealthHealth.Models.Investments;
+
 namespace WealthHealth.DbManagement.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<WealthHealth.DbManagement.WealthHealthDB>
+    internal sealed class Configuration : DbMigrationsConfiguration<WealthHealthDB>
     {
         public Configuration()
         {
@@ -13,7 +12,7 @@ namespace WealthHealth.DbManagement.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(WealthHealth.DbManagement.WealthHealthDB context)
+        protected override void Seed(WealthHealthDB context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -27,6 +26,14 @@ namespace WealthHealth.DbManagement.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            context.Brokerages.AddOrUpdate(
+              new Brokerage { Id = 1, Title = "TRowe Price" },
+              new Brokerage { Id = 2, Title = "ShareBuilder" },
+              new Brokerage { Id = 3, Title = "Bank Of America" },
+              new Brokerage { Id = 4, Title = "ETrade" },
+              new Brokerage { Id = 4, Title = "TDAmeritrade" }
+            );
         }
     }
 }

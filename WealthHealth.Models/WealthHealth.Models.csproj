@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +45,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\User.cs" />
+    <Compile Include="Investments\Brokerage.cs" />
+    <Compile Include="Investments\BrokerageAccount.cs" />
+    <Compile Include="Investments\ClosingTransactionMatch.cs" />
+    <Compile Include="Investments\Mappings\BrokerageMap.cs" />
+    <Compile Include="Investments\Mappings\ClosingTransactionMatchMap.cs" />
+    <Compile Include="Investments\Mappings\MutualFundMap.cs" />
+    <Compile Include="Investments\Mappings\PurchaseTransactionMap.cs" />
+    <Compile Include="Investments\Mappings\SecurityMap.cs" />
+    <Compile Include="Investments\Mappings\SellTransactionMap.cs" />
+    <Compile Include="Investments\Mappings\StockMap.cs" />
+    <Compile Include="Investments\Mappings\TransactionMap.cs" />
+    <Compile Include="Investments\MutualFund.cs" />
+    <Compile Include="Investments\PurchaseTransaction.cs" />
+    <Compile Include="Investments\Security.cs" />
+    <Compile Include="Investments\SellTransaction.cs" />
+    <Compile Include="Investments\Stock.cs" />
+    <Compile Include="Investments\Transaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -52,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\Mappings\" />
-    <Folder Include="Investments\Mappings\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
