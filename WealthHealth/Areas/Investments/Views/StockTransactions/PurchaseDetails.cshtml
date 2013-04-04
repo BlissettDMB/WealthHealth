@@ -1,0 +1,78 @@
+﻿@model WealthHealth.Models.Investments.PurchaseTransaction
+
+@{
+    ViewBag.Title = "PurchaseDetails";
+}
+
+<h2>PurchaseDetails</h2>
+
+<fieldset>
+    <legend>PurchaseTransaction</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClosedShares)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClosedShares)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RemainingShares)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RemainingShares)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PositionClosedStatus)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PositionClosedStatus)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.SecurityId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SecurityId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BrokerageAccountId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BrokerageAccountId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TransactionDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TransactionDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ShareQuantity)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ShareQuantity)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UnitPrice)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UnitPrice)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Commission)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Commission)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

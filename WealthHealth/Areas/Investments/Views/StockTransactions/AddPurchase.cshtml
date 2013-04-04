@@ -1,0 +1,75 @@
+﻿@model WealthHealth.ViewModels.Investments.Transactions.AddPurchaseTransactionVm
+
+@{
+    ViewBag.Title = "Add Purchase Transaction";
+}
+
+<hgroup class="title">
+    <h1>Purchase Transaction.</h1>
+    <h2>Add</h2>
+</hgroup>
+@using (Html.BeginForm("AddPurchase", "StockTransactions", new { area = "" }, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <legend>Add Purchase Transaction</legend>
+        
+        <div class="control-group">
+            @Html.LabelFor(model => model.SecurityId, new { @class = "control-label" })
+            <div class="controls">
+                @Html.DropDownList("SecurityId", (SelectList)ViewBag.SecurityId, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.SecurityId)
+            </div>
+        </div>
+        
+        <div class="control-group">
+            @Html.LabelFor(model => model.BrokerageAccountId, new { @class = "control-label" })
+            <div class="controls">
+                @Html.DropDownList("BrokerageAccountId", (SelectList)ViewBag.BrokerageAccountId, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.BrokerageAccountId)
+            </div>
+        </div>
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.ShareQuantity, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(model => model.ShareQuantity, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.ShareQuantity)
+            </div>
+        </div>
+        
+        <div class="control-group">
+            @Html.LabelFor(model => model.UnitPrice, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(model => model.UnitPrice, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.UnitPrice)
+            </div>
+        </div>
+        
+        <div class="control-group">
+            @Html.LabelFor(model => model.Commission, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Commission, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.Commission)
+            </div>
+        </div>
+        
+        <div class="control-group">
+            @Html.LabelFor(model => model.TransactionDate, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(model => model.TransactionDate, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.TransactionDate)
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary btn-large" value="Add Purchase Transaction" />
+            @Html.ActionLink("Cancel", "Index", "BrokerageAccounts", new { area = "" }, new { @class = "btn btn-large" })
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

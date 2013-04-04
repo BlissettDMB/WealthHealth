@@ -1,0 +1,271 @@
+﻿@model WealthHealth.ViewModels.Investments.Transactions.AddSellTransactionVm
+
+@{
+    ViewBag.Title = "Add Closing Sell Transaction";
+}
+
+<hgroup class="title">
+    <h1>Sell Transaction.</h1>
+    <h2>Add</h2>
+</hgroup>
+@using (Html.BeginForm("AddSell", "StockTransactions", new { area = "" }, FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <legend>Add Sell Transaction</legend>
+        
+        <div class="row-fluid">
+            <div class="span6">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.BrokerageAccountId, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("BrokerageAccountId", (SelectList)ViewBag.BrokerageAccountId, new { @class = "input-xlarge", data_bind="value: BrokerageAccountId" })
+                        @Html.ValidationMessageFor(model => model.BrokerageAccountId)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.SecurityId, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("SecurityId", (SelectList)ViewBag.SecurityId, new { @class = "input-xlarge", data_bind="value: SecurityId" })
+                        @Html.ValidationMessageFor(model => model.SecurityId)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ShareQuantity, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.ShareQuantity, new { @class = "input-xlarge", data_bind="value: ShareQuantity" })
+                        @Html.ValidationMessageFor(model => model.ShareQuantity)
+                    </div>
+                </div>
+        
+                <div class="control-group">
+                    @Html.LabelFor(model => model.UnitPrice, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.UnitPrice, new { @class = "input-xlarge", data_bind="value: UnitPrice" })
+                        @Html.ValidationMessageFor(model => model.UnitPrice)
+                    </div>
+                </div>
+        
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Commission, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Commission, new { @class = "input-xlarge", data_bind="value: Commission" })
+                        @Html.ValidationMessageFor(model => model.Commission)
+                    </div>
+                </div>
+        
+                <div class="control-group">
+                    @Html.LabelFor(model => model.TransactionDate, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.TransactionDate, new { @class = "input-xlarge" })
+                        @Html.ValidationMessageFor(model => model.TransactionDate)
+                    </div>
+                </div>
+            </div>
+            <div class="span6">
+                <h2>Closing Transactions:</h2>
+                <div id="matching-purchase-tax-lots" class="matching-purchase-tax-lots" data-bind="foreach: TaxLots">
+                    <div class="matching-purchase-tax-lot" data-bind="css: { 'tax-lot-fulfilled': TaxLotFulfilled() }">
+                        <div>
+                            <dl>
+                                <dt>Transaction Date</dt>
+                                <dd><span class="ct-TransactionDate" data-bind="text: TransactionDate"></span></dd>
+                                <dt>Total Quantity Purchased</dt>
+                                <dd><span class="ct-TotalShareQuantity" data-bind="text: TotalShareQuantity"></span></dd>
+                                <dt>Share Quantity Remaining</dt>
+                                <dd><span class="ct-ShareQuantityRemaining" data-bind="text: ShareQuantityRemaining"></span></dd>
+                                <dt>Purchase Unit Price</dt>
+                                <dd><span class="ct-PurchaseUnitPrice" data-bind="text: PurchaseUnitPrice"></span></dd>
+                                <dt>Total Purchase Commission</dt>
+                                <dd><span class="ct-PurchaseCommission" data-bind="text: PurchaseCommission"></span></dd>
+                            </dl>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="ShareQuantity">Share Quantity</label>
+                            <div class="controls">
+                                <input id="ShareQuantity" class="input-small input-validation-error" type="text" value="" data-bind="attr: { name: FormatInputName($index, 'ShareQuantity') }, value: ShareQuantity" name="" data-val-required="The Share Quantity field is required." data-val-number="The field Share Quantity must be a number." data-val="true">
+                            </div>
+                        </div>
+                      
+                        <input data-bind="attr: { name: FormatInputName($index, 'PurchaseTransactionId') }, value: PurchaseTransactionId" type="hidden" class="tax-lot-purchase-transaction-id" name="" value="" />  
+                        <input data-bind="attr: { name: FormatInputName($index, 'ShareQuantity') }, value: ShareQuantity" type="hidden" class="tax-lot-share-quantity" name="" value="" />
+                    </div>
+                </div>
+            </div>
+        </div>    
+
+        <div class="row-fluid">
+            <div class="span4">
+                <span>Net Proceeds</span>
+                <span data-bind="text: NetProceeds"></span>
+            </div>
+            <div class="span4">
+                
+            </div>
+            <div class="span4">
+                
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary btn-large" value="Add Sell Transaction" />
+            @Html.ActionLink("Cancel", "Index", "BrokerageAccounts", new { area = "" }, new { @class = "btn btn-large" })
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/plugins")
+
+<script type="text/javascript">
+
+    $(function () {
+        // Class to represent a purchase tax lot that us being applied to the new sell transaction
+        // new taxLotModel("1", "1", "1")
+        function taxLotModel(purchaseTransactionId, shareQuantity, transactionDate, totalShareQuantity, shareQuantityRemaining, purchaseUnitPrice, purchaseCommission) {
+            var self = this;
+            
+            self.PurchaseTransactionId = ko.observable(purchaseTransactionId);
+            self.ShareQuantity = ko.observable(shareQuantity);
+            self.TransactionDate = transactionDate;
+            self.TotalShareQuantity = totalShareQuantity;
+            self.ShareQuantityRemaining = shareQuantityRemaining;
+            self.PurchaseUnitPrice = purchaseUnitPrice;
+            self.PurchaseCommission = purchaseCommission;
+
+            self.FormatInputName = function (index, fieldName) {
+                return "MatchingPurchaseTransactions[" + index() + "]." + fieldName;
+            };
+            self.FormatTriggerId = function (index, triggerName) {
+                return triggerName + "_" + index();
+            };
+            self.TaxLotFulfilled = ko.computed(function () {
+                var shareQuantity = this.ShareQuantity();
+                return true;
+            }, this);
+        }
+
+        var matchingTaxLots = [
+            @{
+                if (Model != null && Model.MatchingPurchaseTransactions != null && Model.MatchingPurchaseTransactions.Count > 0)
+                {
+                    for (int i = 0; i < Model.MatchingPurchaseTransactions.Count; i++)
+                    {
+                        <text>new AnswerOptionViewModel("@(Model.MatchingPurchaseTransactions[i].PurchaseTransactionId)", "@(Model.MatchingPurchaseTransactions[i].ShareQuantity)", "@(Model.MatchingPurchaseTransactions[i].PurchaseTransaction.TransactionDate.ToShortDateString())", "@(Model.MatchingPurchaseTransactions[i].PurchaseTransaction.ShareQuantity)", "@(Model.MatchingPurchaseTransactions[i].PurchaseTransaction.RemainingShares)", "@(Model.MatchingPurchaseTransactions[i].PurchaseTransaction.UnitPrice)", "@(Model.MatchingPurchaseTransactions[i].PurchaseTransaction.Commission)")</text>if (i < (Model.MatchingPurchaseTransactions.Count - 1)) { <text>,</text> }
+                    }
+                }
+            }
+        ];
+
+        function viewModel(taxLots) {
+            var self = this;
+            self.TaxLots = ko.observableArray(taxLots);
+            self.SecurityId = ko.observable();
+            self.BrokerageAccountId = ko.observable();
+            self.ShareQuantity = ko.observable();
+            self.UnitPrice = ko.observable();
+            self.Commission = ko.observable();
+            self.NetProceeds = ko.computed(function () {
+                return this.ShareQuantity() * this.UnitPrice() - this.Commission();
+            }, this);
+            self.MatchingPurchaseCount = ko.computed(function () {
+                return this.TaxLots().length;
+            }, this);
+        }
+
+        var vm = new viewModel(matchingTaxLots);
+        ko.applyBindings(vm);
+
+        $('#BrokerageAccountId').on('change', function () {
+            var securityDropDown = $('#SecurityId');
+            var selectedSecurityId = securityDropDown.val();
+            clearMatchingTransactions();
+            clearSecurityOptions();
+            
+            $.get('/api/StockTransactions/GetStocksWithOpenPositionsInBrokerageAccount/' + vm.BrokerageAccountId(), function (stocks) {
+                if (stocks.length > 0) {
+                    $.each(stocks, function(i, stock) {
+                        securityDropDown.append($('<option>').text(stock.securityWithSymbol).val(stock.id));
+                        if (stock.id == selectedSecurityId) {
+                            securityDropDown.find('option[value=' + selectedSecurityId + ']').attr('selected', 'selected');
+                        }
+                    });
+
+                    if (securityDropDown.val() == null) {
+                        securityDropDown.find('option:first-child').attr('selected', 'selected');
+                    }
+                    
+                    securityDropDown.change();
+                } else {
+                    
+                }
+            });
+            
+            return true;
+        });
+
+        $('#SecurityId').on('change', function () {
+            clearMatchingTransactions();
+            loadMatchingTransactions();
+        });
+        
+        var clearMatchingTransactions = function () {
+            vm.TaxLots.removeAll();
+        };
+        
+        var clearSecurityOptions = function () {
+
+            var securityDropDown = $('#SecurityId');
+            var securitySelectOptions = securityDropDown.find('option');
+
+            securitySelectOptions.each(function () {
+                $(this).remove();
+            });
+        };
+        
+        var loadMatchingTransactions = function () {
+
+            $.post('/api/StockTransactions/GetOpenPositionsInBrokerageAccountForStock', { BrokerageAccountId: vm.BrokerageAccountId(), SecurityId: vm.SecurityId() },
+                function (purchaseTransactions) {
+                    if (purchaseTransactions.length > 0) {
+                        var shareQuantity = $('#ShareQuantity').val();
+                        var distributedShareQuantity = 0;
+                        //Is the provided field an integer or float?
+                        if ((parseFloat(shareQuantity) || parseInt(shareQuantity)) && !isNaN(shareQuantity)) {
+                            distributedShareQuantity = shareQuantity;
+                        }
+
+                        $.each(purchaseTransactions, function (i, purchaseTransaction) {
+                            var taxLotContributingShares = purchaseTransaction.remainingShares;
+                            if (distributedShareQuantity < purchaseTransaction.remainingShares) {
+                                taxLotContributingShares = distributedShareQuantity;
+                            }
+                            distributedShareQuantity = distributedShareQuantity - taxLotContributingShares;
+
+                            vm.TaxLots.push(
+                                new taxLotModel(
+                                    purchaseTransaction.id,
+                                    taxLotContributingShares,
+                                    purchaseTransaction.transactionDate,
+                                    purchaseTransaction.shareQuantity,
+                                    purchaseTransaction.remainingShares,
+                                    purchaseTransaction.unitPrice,
+                                    purchaseTransaction.commission
+                                )
+                            );
+                        });
+
+                    } else {
+
+                    }
+                });
+        };
+
+    });
+
+</script>
+}

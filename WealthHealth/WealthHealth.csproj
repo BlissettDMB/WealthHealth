@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Breeze.WebApi">
+      <HintPath>..\packages\Breeze.WebApi.1.2.7\lib\Breeze.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="dotless.Core">
       <HintPath>..\packages\dotless.1.3.1.0\lib\dotless.Core.dll</HintPath>
     </Reference>
@@ -59,6 +62,9 @@
     </Reference>
     <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
       <HintPath>..\packages\DotNetOpenAuth.OpenId.RelyingParty.4.2.2.13055\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="Irony">
+      <HintPath>..\packages\Breeze.WebApi.1.2.7\lib\Irony.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
@@ -164,6 +170,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.WebApi">
+      <HintPath>..\packages\Unity.WebAPI.0.10\lib\net40\Unity.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivator">
+      <HintPath>..\packages\WebActivator.1.5.3\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
     <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.Data.2.0.20710.0\lib\net40\WebMatrix.Data.dll</HintPath>
@@ -203,24 +215,89 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\BreezeWebApiConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\GlobalConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Investments\Api\StocksController.cs" />
+    <Compile Include="Areas\Investments\Api\StockTransactionsController.cs" />
+    <Compile Include="Areas\Investments\Controllers\BrokerageAccountsController.cs" />
+    <Compile Include="Areas\Investments\Controllers\MutualFundsController.cs" />
+    <Compile Include="Areas\Investments\Controllers\StocksController.cs" />
+    <Compile Include="Areas\Investments\Controllers\StockTransactionsController.cs" />
+    <Compile Include="Areas\Investments\InvestmentsAreaRegistration.cs" />
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\Ajax\AjaxOnlyAttribute.cs" />
+    <Compile Include="Filters\Cache\NoCacheAttribute.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Filters\StateManagement\ActiveUserRequiredAttribute.cs" />
+    <Compile Include="Filters\WebApi\ValidationPostAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Html\FlashMessages\FlashMessage.cs" />
+    <Compile Include="Helpers\Html\FlashMessages\FlashMessageHelper.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DependencyResolution\UnityDependencyResolver.cs" />
+    <Compile Include="Areas\Investments\Services\Investments\BrokerageAccounts\BrokerageAccountService.cs" />
+    <Compile Include="Areas\Investments\Services\Investments\BrokerageAccounts\IBrokerageAccountService.cs" />
+    <Compile Include="Areas\Investments\Services\Investments\Securities\IMutualFundService.cs" />
+    <Compile Include="Areas\Investments\Services\Investments\Securities\IStockService.cs" />
+    <Compile Include="Areas\Investments\Services\Investments\Securities\MutualFundService.cs" />
+    <Compile Include="Areas\Investments\Services\Investments\Securities\StockService.cs" />
+    <Compile Include="Areas\Investments\Services\Investments\Transactions\IPurchaseTransactionService.cs" />
+    <Compile Include="Areas\Investments\Services\Investments\Transactions\ISellTransactionService.cs" />
+    <Compile Include="Areas\Investments\Services\Investments\Transactions\PurchaseTransactionService.cs" />
+    <Compile Include="Areas\Investments\Services\Investments\Transactions\SellTransactionService.cs" />
+    <Compile Include="Services\StateManagement\ActiveUserService.cs" />
+    <Compile Include="ViewModels\Investments\BrokerageAccounts\AddBrokerageAccountVm.cs" />
+    <Compile Include="ViewModels\Investments\BrokerageAccounts\AddBrokerageVm.cs" />
+    <Compile Include="ViewModels\Investments\BrokerageAccounts\BrokerageAccountListVm.cs" />
+    <Compile Include="ViewModels\Investments\BrokerageAccounts\BrokerageAccountOverviewVm.cs" />
+    <Compile Include="ViewModels\Investments\BrokerageAccounts\BrokerageListVm.cs" />
+    <Compile Include="ViewModels\Investments\BrokerageAccounts\EditBrokerageAccountVm.cs" />
+    <Compile Include="ViewModels\Investments\MutualFunds\AddMutualFundVm.cs" />
+    <Compile Include="ViewModels\Investments\MutualFunds\EditMutualFundVm.cs" />
+    <Compile Include="ViewModels\Investments\Stocks\AddStockVm.cs" />
+    <Compile Include="ViewModels\Investments\Stocks\EditStockVm.cs" />
+    <Compile Include="ViewModels\Investments\Stocks\StockListVm.cs" />
+    <Compile Include="ViewModels\Investments\Transactions\AddPurchaseTransactionVm.cs" />
+    <Compile Include="ViewModels\Investments\Transactions\AddSellTransactionVm.cs" />
+    <Compile Include="ViewModels\Investments\Transactions\RequestTransactionsVm.cs" />
+    <Compile Include="ViewModels\Investments\Transactions\SecurityPurchaseHistoryVm.cs" />
+    <Compile Include="ViewModels\Investments\Transactions\TransactionMatchVm.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\durandal\amd\almond-custom.js" />
+    <Content Include="App\durandal\amd\optimizer.exe" />
+    <Content Include="App\durandal\amd\r.js" />
+    <Content Include="App\durandal\amd\require.js" />
+    <Content Include="App\durandal\amd\text.js" />
+    <Content Include="App\durandal\app.js" />
+    <Content Include="App\durandal\composition.js" />
+    <Content Include="App\durandal\events.js" />
+    <Content Include="App\durandal\http.js" />
+    <Content Include="App\durandal\messageBox.html" />
+    <Content Include="App\durandal\messageBox.js" />
+    <Content Include="App\durandal\modalDialog.js" />
+    <Content Include="App\durandal\plugins\router.js" />
+    <Content Include="App\durandal\system.js" />
+    <Content Include="App\durandal\transitions\entrance.js" />
+    <Content Include="App\durandal\viewEngine.js" />
+    <Content Include="App\durandal\viewLocator.js" />
+    <Content Include="App\durandal\viewModel.js" />
+    <Content Include="App\durandal\viewModelBinder.js" />
+    <Content Include="App\durandal\widget.js" />
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\durandal.css" />
     <Content Include="Content\font-awesome-ie7.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
@@ -352,9 +429,30 @@
     <Content Include="Content\font\FontAwesome.otf" />
     <Content Include="Content\less\font-awesome-ie7.less" />
     <Content Include="Content\less\font-awesome.less" />
+    <Content Include="Areas\Investments\Views\Web.config" />
+    <Content Include="Areas\Investments\Views\BrokerageAccounts\Add.cshtml" />
+    <Content Include="Areas\Investments\Views\BrokerageAccounts\AddBrokerage.cshtml" />
+    <Content Include="Areas\Investments\Views\BrokerageAccounts\Brokerages.cshtml" />
+    <Content Include="Areas\Investments\Views\BrokerageAccounts\Details.cshtml" />
+    <Content Include="Areas\Investments\Views\BrokerageAccounts\Edit.cshtml" />
+    <Content Include="Areas\Investments\Views\BrokerageAccounts\Index.cshtml" />
+    <Content Include="Areas\Investments\Views\MutualFunds\Add.cshtml" />
+    <Content Include="Areas\Investments\Views\MutualFunds\Details.cshtml" />
+    <Content Include="Areas\Investments\Views\MutualFunds\Edit.cshtml" />
+    <Content Include="Areas\Investments\Views\MutualFunds\Index.cshtml" />
+    <Content Include="Areas\Investments\Views\Stocks\Add.cshtml" />
+    <Content Include="Areas\Investments\Views\Stocks\Details.cshtml" />
+    <Content Include="Areas\Investments\Views\Stocks\Edit.cshtml" />
+    <Content Include="Areas\Investments\Views\Stocks\Index.cshtml" />
+    <Content Include="Areas\Investments\Views\StockTransactions\AddPurchase.cshtml" />
+    <Content Include="Areas\Investments\Views\StockTransactions\AddSell.cshtml" />
+    <Content Include="Areas\Investments\Views\StockTransactions\PurchaseDetails.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\breeze.intellisense.js" />
+    <Content Include="Scripts\breeze.debug.js" />
+    <Content Include="Scripts\breeze.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
@@ -377,9 +475,14 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\q.js" />
+    <Content Include="Scripts\q.min.js" />
     <Content Include="Scripts\qunit.js" />
+    <Content Include="Scripts\sammy-0.7.4.js" />
+    <Content Include="Scripts\sammy-0.7.4.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Unity.WebAPI.README.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -422,6 +525,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Investments\Models\" />
+    <Folder Include="Areas\Investments\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

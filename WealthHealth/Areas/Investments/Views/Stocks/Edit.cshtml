@@ -1,0 +1,45 @@
+﻿@model WealthHealth.ViewModels.Investments.Stocks.EditStockVm
+
+@{
+    ViewBag.Title = "Edit Stock";
+}
+
+<hgroup class="title">
+    <h1>Stock.</h1>
+    <h2>Edit</h2>
+</hgroup>
+@using (Html.BeginForm("Edit", "Stocks", new { area = "", id = Model.Id  }, FormMethod.Post, new {  @class = "form-horizontal" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <legend>Edit Stock</legend>
+        
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Title, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+        </div>
+        
+        <div class="control-group">
+            @Html.LabelFor(model => model.Symbol, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Symbol, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.Symbol)
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary btn-large" value="Update Stock" />
+            @Html.ActionLink("Cancel", "Index", "Stocks", new { area = "" }, new { @class = "btn btn-large" })
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

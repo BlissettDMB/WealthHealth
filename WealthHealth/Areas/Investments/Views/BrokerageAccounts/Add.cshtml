@@ -1,0 +1,58 @@
+﻿@model WealthHealth.ViewModels.Investments.BrokerageAccounts.AddBrokerageAccountVm
+
+@{
+    ViewBag.Title = "Add Brokerage Account";
+}
+
+<hgroup class="title">
+    <h1>Brokerage Account.</h1>
+    <h2>Create</h2>
+</hgroup>
+@using (Html.BeginForm("Add", "BrokerageAccounts", new { area = ""  }, FormMethod.Post, new {  @class = "form-horizontal" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <legend>Add Brokerage Account</legend>
+        <div class="control-group">
+            @Html.LabelFor(model => model.AccountNumber, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(model => model.AccountNumber, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.AccountNumber)
+            </div>
+        </div>
+        
+        <div class="control-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Title, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+        </div>
+        
+        <div class="control-group">
+            @Html.LabelFor(model => model.IsRetirement,  new { @class = "control-label" })
+            <div class="controls">
+                @Html.CheckBoxFor(model => model.IsRetirement)
+                @Html.ValidationMessageFor(model => model.IsRetirement)
+            </div>
+        </div>
+        
+        <div class="control-group">
+            @Html.LabelFor(model => model.BrokerageId, new { @class = "control-label" })
+            <div class="controls">
+                @Html.DropDownList("BrokerageId", (SelectList)ViewBag.BrokerageId, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.BrokerageId)
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary btn-large" value="Add Brokerage Account" />
+            @Html.ActionLink("Cancel", "Index", "BrokerageAccounts", new { area = "" }, new { @class = "btn btn-large" })
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

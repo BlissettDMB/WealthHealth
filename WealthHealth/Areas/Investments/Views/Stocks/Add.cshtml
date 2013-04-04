@@ -1,0 +1,42 @@
+﻿@model WealthHealth.ViewModels.Investments.Stocks.AddStockVm
+@{
+    ViewBag.Title = "Add Stock";
+}
+
+<hgroup class="title">
+    <h1>Stock.</h1>
+    <h2>Create</h2>
+</hgroup>
+@using (Html.BeginForm("Add", "Stocks", new { area = ""  }, FormMethod.Post, new {  @class = "form-horizontal" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <legend>Add Stock</legend>
+        
+        <div class="control-group">
+            @Html.LabelFor(model => model.Title, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Title, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+        </div>
+        
+        <div class="control-group">
+            @Html.LabelFor(model => model.Symbol, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextBoxFor(model => model.Symbol, new { @class = "input-xlarge" })
+                @Html.ValidationMessageFor(model => model.Symbol)
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary btn-large" value="Add Stock" />
+            @Html.ActionLink("Cancel", "Index", "Stocks", new { area = "" }, new { @class = "btn btn-large" })
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
